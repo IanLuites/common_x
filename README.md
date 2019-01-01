@@ -21,3 +21,20 @@ end
 
 The docs can be found at [https://hexdocs.pm/common_x](https://hexdocs.pm/common_x).
 
+## Extensions
+
+The following modules have extension:
+
+ - `EnumX` (`Enum` extension)
+ - `MapX` (`Map` extension)
+ - `Macro` (`Macro` extension)
+
+## Changelog
+
+### 2019-01-01 (v0.0.2)
+
+- Add `MacroX` extension with the following methods:
+  - `camalize/1` proper camelCase for `string` and `atom`.
+  - `pascalize/1` proper PascalCase for `string` and `atom`.
+  - `snakize/1` proper snake_case for `string` and `atom`.
+  - `underscore/1` alias for `snakize`.
