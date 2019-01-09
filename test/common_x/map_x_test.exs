@@ -2,6 +2,10 @@ defmodule MapXTest do
   use ExUnit.Case, async: true
   import MapX
 
+  defmodule Struct do
+    defstruct [:example]
+  end
+
   doctest MapX
 
   describe "merge/1" do
@@ -51,6 +55,13 @@ defmodule MapXTest do
   describe "stringify/1" do
     test "merge" do
       assert stringify(%{a: [%{a: 6}]}) == %{"a" => [%{"a" => 6}]}
+    end
+  end
+
+  describe "new/3" do
+    test "creates struct" do
+      assert MapX.new([:example], &{:ok, &1, to_string(&1)}, Struct) ==
+               {:ok, %Struct{example: "example"}}
     end
   end
 end

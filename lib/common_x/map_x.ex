@@ -134,11 +134,12 @@ defmodule MapX do
   {:ok, %{a: :a, b: :b}}
   ```
   """
-  @spec new(Enumerable.t(), (term -> {:ok, Map.key(), Map.value()} | {:error, term})) :: map
-  def new(enumerable, transform) when is_function(transform, 1) do
+  @spec new(Enumerable.t(), (term -> {:ok, Map.key(), Map.value()} | {:error, term}), module) ::
+          map
+  def new(enumerable, transform, struct \\ nil) when is_function(transform, 1) do
     enumerable
     |> Enum.to_list()
-    |> new_transform(transform, [])
+    |> new_transform(transform, if(is_nil(struct), do: [], else: [__struct__: struct]))
   end
 
   defp new_transform([], _fun, acc) do
