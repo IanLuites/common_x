@@ -127,11 +127,18 @@ defmodule MapX do
   Creates a map from an `enumerable` via the given transformation function.
   Duplicated keys are removed; the latest one prevails.
 
+  Returning `:skip` will skip to the next value.
+
   ## Examples
 
   ```elixir
   iex> MapX.new([:a, :b], fn x -> {:ok, x, x} end)
   {:ok, %{a: :a, b: :b}}
+  ```
+
+  ```elixir
+  iex> MapX.new(1..5, &if(rem(&1, 2) == 0, do: :skip, else: {:ok, &1, &1}))
+  {:ok, %{1 => 1, 3 => 3, 5 => 5}}
   ```
   """
   @spec new(Enumerable.t(), (term -> {:ok, Map.key(), Map.value()} | {:error, term}), module) ::
@@ -150,8 +157,10 @@ defmodule MapX do
   end
 
   defp new_transform([item | rest], fun, acc) do
-    with {:ok, key, value} <- fun.(item) do
-      new_transform(rest, fun, [{key, value} | acc])
+    case fun.(item) do
+      :skip -> new_transform(rest, fun, acc)
+      {:ok, key, value} -> new_transform(rest, fun, [{key, value} | acc])
+      error -> error
     end
   end
 

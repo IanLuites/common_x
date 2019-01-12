@@ -63,5 +63,9 @@ defmodule MapXTest do
       assert MapX.new([:example], &{:ok, &1, to_string(&1)}, Struct) ==
                {:ok, %Struct{example: "example"}}
     end
+
+    test "errors out" do
+      assert MapX.new(1..5, fn _ -> {:error, :forced_to_fail} end) == {:error, :forced_to_fail}
+    end
   end
 end
