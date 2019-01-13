@@ -86,6 +86,8 @@ defmodule MacroX do
   "FooBar"
   iex> MacroX.pascalize(:foo_bar)
   FooBar
+  iex> MacroX.pascalize("cluster_ip")
+  "ClusterIP"
   ```
 
   If uppercase characters are present, they are not modified in any way
@@ -102,7 +104,7 @@ defmodule MacroX do
   def pascalize(data) when is_atom(data),
     do: String.to_atom("Elixir." <> pascalize(to_string(data)))
 
-  def pascalize(data), do: Macro.camelize(data)
+  def pascalize(data), do: Macro.camelize(Regex.replace(~r/(^|_)ip(_|$)/, data, "\\1iP\\2"))
 
   @doc ~S"""
   Properly converts atoms and strings to camelCase.
