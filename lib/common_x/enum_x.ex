@@ -63,4 +63,39 @@ defmodule EnumX do
       {:ok, :lists.reverse(enum)}
     end
   end
+
+  @doc ~S"""
+  Invokes the given `fun` for each item in the `enumerable`.
+  Returns `:ok` if all calls return `:ok`, returns `{:error, term}` if any fail.
+
+  ## Examples
+  ```elixir
+  iex> EnumX.each([1, 2, 3], fn x -> IO.puts(to_string(x)) end)
+  #=> "1"
+  #=> "2"
+  #=> "3"
+  :ok
+  ```
+
+  Will halt on first error:
+  ```elixir
+  iex> EnumX.each([1, 2, 3], fn x -> if x != 2, do: IO.puts(to_string(x)), else: {:error, :is_two} end)
+  #=> "1"
+  {:error, :is_two}
+  ```
+  """
+  @spec each(Enum.t(), (Enum.element() -> :ok | {:error, term})) :: :ok | {:error, term}
+  def each(enumerable, fun) do
+    enumerable
+    |> Enumerable.reduce(
+      {:cont, :ok},
+      fn e, :ok ->
+        case fun.(e) do
+          :ok -> {:cont, :ok}
+          err = {:error, _} -> {:halt, err}
+        end
+      end
+    )
+    |> elem(1)
+  end
 end
