@@ -25,11 +25,20 @@ The docs can be found at [https://hexdocs.pm/common_x](https://hexdocs.pm/common
 
 The following modules have extension:
 
+ - `ApplicationX` (`Application` extension)
  - `EnumX` (`Enum` extension)
  - `MapX` (`Map` extension)
  - `Macro` (`Macro` extension)
 
 ## Changelog
+
+### 20??-??-?? (v?.?.?)
+
+- Add `ApplicationX` extension with the following methods:
+  - `applications/0` list all applications, without starting.
+  - `applications/1` list all dependencies, without starting.
+  - `modules/0` list all modules, without starting applications.
+  - `modules/1` list all modules in given applications, without starting them.
 
 ### 2019-01-01 (v0.0.2)
 

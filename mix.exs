@@ -19,7 +19,7 @@ defmodule CommonX.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test
       ],
-      dialyzer: [ignore_warnings: ".dialyzer", plt_add_deps: true],
+      dialyzer: [ignore_warnings: ".dialyzer", plt_add_deps: true, plt_add_apps: [:mix]],
 
       # Docs
       name: "CommonX",
