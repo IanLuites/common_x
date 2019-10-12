@@ -14,7 +14,7 @@ The package can be installed by adding `common_x` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:common_x, "~> 0.0.1"}
+    {:common_x, "~> 0.2.0"}
   ]
 end
 ```
@@ -32,7 +32,7 @@ The following modules have extension:
 
 ## Changelog
 
-### 20??-??-?? (v?.?.?)
+### 2019-10-12 (v0.2.0)
 
 - Add `ApplicationX` extension with the following methods:
   - `applications/0` list all applications, without starting.
