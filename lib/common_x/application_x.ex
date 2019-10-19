@@ -22,9 +22,11 @@ defmodule ApplicationX do
   """
   @spec applications :: [atom]
   def applications do
-    if main_app = Project.config()[:app] do
-      with {:error, {@load_error, _}} <- :application.load(main_app), do: run("loadpaths", [])
-      gather_applications([main_app])
+    app = if(Process.whereis(Mix.ProjectStack), do: Project.config()[:app])
+
+    if app do
+      with {:error, {@load_error, _}} <- :application.load(app), do: run("loadpaths", [])
+      gather_applications([app])
     else
       :application.loaded_applications()
       |> Enum.map(&elem(&1, 0))
@@ -78,9 +80,11 @@ defmodule ApplicationX do
   """
   @spec modules :: [module]
   def modules do
-    if main_app = Project.config()[:app] do
-      with {:error, {@load_error, _}} <- :application.load(main_app), do: run("loadpaths", [])
-      modules(main_app)
+    app = if(Process.whereis(Mix.ProjectStack), do: Project.config()[:app])
+
+    if app do
+      with {:error, {@load_error, _}} <- :application.load(app), do: run("loadpaths", [])
+      modules(app)
     else
       :application.loaded_applications()
       |> Enum.map(&elem(&1, 0))
