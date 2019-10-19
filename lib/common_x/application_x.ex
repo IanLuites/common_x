@@ -2,7 +2,8 @@ defmodule ApplicationX do
   @moduledoc ~S"""
   Application module extended functions.
   """
-  alias Mix.{Project, Task}
+  alias Mix.Project
+  import Mix.Task, only: [run: 2]
   @ignore [:kernel, :stdlib, :elixir, :logger]
   @load_error 'no such file or directory'
 
@@ -21,10 +22,15 @@ defmodule ApplicationX do
   """
   @spec applications :: [atom]
   def applications do
-    main_app = Project.config()[:app]
-    with {:error, {@load_error, _}} <- :application.load(main_app), do: Task.run("loadpaths", [])
-
-    gather_applications([main_app])
+    if main_app = Project.config()[:app] do
+      with {:error, {@load_error, _}} <- :application.load(main_app), do: run("loadpaths", [])
+      gather_applications([main_app])
+    else
+      :application.loaded_applications()
+      |> Enum.map(&elem(&1, 0))
+      |> Enum.reject(&(&1 in @ignore))
+      |> gather_applications()
+    end
   end
 
   @doc ~S"""
@@ -72,10 +78,15 @@ defmodule ApplicationX do
   """
   @spec modules :: [module]
   def modules do
-    main_app = Project.config()[:app]
-    with {:error, {@load_error, _}} <- :application.load(main_app), do: Task.run("loadpaths", [])
-
-    modules(main_app)
+    if main_app = Project.config()[:app] do
+      with {:error, {@load_error, _}} <- :application.load(main_app), do: run("loadpaths", [])
+      modules(main_app)
+    else
+      :application.loaded_applications()
+      |> Enum.map(&elem(&1, 0))
+      |> Enum.reject(&(&1 in @ignore))
+      |> modules()
+    end
   end
 
   @doc ~S"""
