@@ -6,6 +6,7 @@ defmodule ApplicationX do
   import Mix.Task, only: [run: 2]
   @ignore [:kernel, :stdlib, :elixir, :logger]
   @load_error 'no such file or directory'
+  @app Project.config()[:app]
 
   @doc ~S"""
   List all available applications excluding system ones.
@@ -21,11 +22,13 @@ defmodule ApplicationX do
   ```
   """
   @spec applications :: [atom]
-  def applications do
-    if main_app = Project.config()[:app] do
-      with {:error, {@load_error, _}} <- :application.load(main_app), do: run("loadpaths", [])
-      gather_applications([main_app])
-    else
+  if @app do
+    def applications do
+      with {:error, {@load_error, _}} <- :application.load(@app), do: run("loadpaths", [])
+      gather_applications([@app])
+    end
+  else
+    def applications do
       :application.loaded_applications()
       |> Enum.map(&elem(&1, 0))
       |> Enum.reject(&(&1 in @ignore))
@@ -77,11 +80,13 @@ defmodule ApplicationX do
   ```
   """
   @spec modules :: [module]
-  def modules do
-    if main_app = Project.config()[:app] do
-      with {:error, {@load_error, _}} <- :application.load(main_app), do: run("loadpaths", [])
-      modules(main_app)
-    else
+  if @app do
+    def modules do
+      with {:error, {@load_error, _}} <- :application.load(@app), do: run("loadpaths", [])
+      modules(@app)
+    end
+  else
+    def modules do
       :application.loaded_applications()
       |> Enum.map(&elem(&1, 0))
       |> Enum.reject(&(&1 in @ignore))

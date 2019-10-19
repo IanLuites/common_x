@@ -14,7 +14,7 @@ The package can be installed by adding `common_x` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:common_x, "~> 0.2.1"}
+    {:common_x, "~> 0.2.2"}
   ]
 end
 ```
