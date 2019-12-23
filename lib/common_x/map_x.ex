@@ -142,7 +142,7 @@ defmodule MapX do
   ```
   """
   @spec new(Enumerable.t(), (term -> {:ok, Map.key(), Map.value()} | {:error, term}), module) ::
-          map
+          {:ok, map} | {:error, term}
   def new(enumerable, transform, struct \\ nil) when is_function(transform, 1) do
     enumerable
     |> Enum.to_list()

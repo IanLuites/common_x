@@ -14,7 +14,7 @@ The package can be installed by adding `common_x` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:common_x, "~> 0.2.2"}
+    {:common_x, "~> 0.2.3"}
   ]
 end
 ```
@@ -31,6 +31,10 @@ The following modules have extension:
  - `Macro` (`Macro` extension)
 
 ## Changelog
+
+### 2019-12-23 (v0.2.3)
+
+- Fix `MapX.new/2` spec.
 
 ### 2019-10-12 (v0.2.0)
 
