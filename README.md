@@ -32,6 +32,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2020-01-15 (v0.3.0)
+
+- Add `MapX.update_if_exists/3` to update map values, only if the key exists.
+
 ### 2019-12-23 (v0.2.3)
 
 - Fix `MapX.new/2` spec.

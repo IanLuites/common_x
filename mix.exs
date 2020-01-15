@@ -60,9 +60,9 @@ defmodule CommonX.MixProject do
 
   defp deps do
     [
-      {:analyze, "~> 0.1.4", optional: true, runtime: false, only: [:dev, :test]},
-      {:dialyxir, "~> 1.0.0-rc.6", optional: true, runtime: false, only: [:dev, :test]},
-      {:meck, "~> 0.8.13", optional: true, runtime: false, only: [:test]}
+      {:analyze, "~> 0.1.10", optional: true, runtime: false, only: [:dev, :test]},
+      {:dialyxir, "~> 1.0.0-rc.7", optional: true, runtime: false, only: [:dev, :test]},
+      {:meck, "~> 0.8", optional: true, runtime: false, only: [:test]}
     ]
   end
 end

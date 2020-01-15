@@ -165,6 +165,33 @@ defmodule MapX do
   end
 
   @doc ~S"""
+  Updates the `key` in `map` with the given function.
+
+  If `key` is present in `map` with value `value`, `fun` is invoked with
+  argument `value` and its result is used as the new value of `key`.
+  If `key` is not present in `map`, then the original `map` is returned.
+
+  ## Examples
+
+  ```elixir
+  iex> MapX.update_if_exists(%{a: 1}, :a, &(&1 * 2))
+  %{a: 2}
+  iex> MapX.update_if_exists(%{a: 1}, :b, &(&1 * 2))
+  %{a: 1}
+  iex> MapX.update_if_exists([a: 5], :a, &(&1 * 2))
+  ** (BadMapError) expected a map, got: [a: 5]
+  ```
+  """
+  @spec update_if_exists(map, Map.key(), (Map.value() -> Map.value())) :: map
+  def update_if_exists(map, key, fun) when is_function(fun, 1) do
+    case map do
+      %{^key => value} -> put(map, key, fun.(value))
+      %{} -> map
+      other -> :erlang.error({:badmap, other}, [map, key, fun])
+    end
+  end
+
+  @doc ~S"""
   Transform the keys of a given map to atoms.
 
   ## Examples
