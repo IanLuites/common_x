@@ -14,7 +14,7 @@ The package can be installed by adding `common_x` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:common_x, "~> 0.3"}
+    {:common_x, "~> 0.4"}
   ]
 end
 ```
@@ -31,6 +31,10 @@ The following modules have extension:
  - `Macro` (`Macro` extension)
 
 ## Changelog
+
+### 2020-03-07 (v0.4.0)
+
+- Add `ApplicationX.main/0`, which returns the atom of the main application, even when called from dependencies.
 
 ### 2020-01-15 (v0.3.0)
 
