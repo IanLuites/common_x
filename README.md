@@ -32,6 +32,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2020-03-08 (v0.4.1)
+
+- Add `ApplicationX.main_project/0`, which returns the mix project config of the main application, even when called from dependencies.
+
 ### 2020-03-07 (v0.4.0)
 
 - Add `ApplicationX.main/0`, which returns the atom of the main application, even when called from dependencies.
