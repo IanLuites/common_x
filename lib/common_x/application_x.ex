@@ -7,7 +7,7 @@ defmodule ApplicationX do
   @ignore [:kernel, :stdlib, :elixir, :logger]
   @load_error 'no such file or directory'
 
-  main_app =
+  main_project =
     if p = Process.whereis(Mix.TasksServer) do
       module =
         p
@@ -17,12 +17,12 @@ defmodule ApplicationX do
           _ -> false
         end)
 
-      if module, do: module.project()[:app]
+      if module, do: module.project()
     end
 
   main_app =
-    if main_app do
-      main_app
+    if main_project do
+      main_project[:app]
     else
       [
         Path.join(File.cwd!(), "../../mix.exs"),
@@ -61,9 +61,8 @@ defmodule ApplicationX do
       └── :common_x
   ```
 
-  In that scenario calling `ApplicationX.main` will return in `:my_app`
+  In that scenario calling `ApplicationX.main` will return `:my_app`
   both for code in `:my_app` and `:my_dep`.
-
 
   ## Examples
 
@@ -74,6 +73,38 @@ defmodule ApplicationX do
   """
   @spec main :: atom
   def main, do: unquote(main_app)
+
+  @doc ~S"""
+  The mix configuration of the current main application.
+
+  For example take an application called `:my_app`,
+  which includes the `:my_dep` dependencies,
+  which has `:common_x` as dependency.
+
+  So:
+  ```
+  :my_app
+  ├── ...
+  └── :my_dep
+      ├── ...
+      └── :common_x
+  ```
+
+  In that scenario calling `ApplicationX.main` will return
+  the mix config of `:my_app` both for code in `:my_app` and `:my_dep`.
+
+  ## Examples
+
+  ```elixir
+  iex> config = ApplicationX.main_project
+  iex> config[:app]
+  :common_x
+  iex> config[:description]
+  "Extension of common Elixir modules."
+  ```
+  """
+  @spec main_project :: Keyword.t()
+  def main_project, do: unquote(Macro.escape(main_project || []))
 
   @doc ~S"""
   List all available applications excluding system ones.
