@@ -174,7 +174,7 @@ defmodule ApplicationX do
   Since `:common_x` does not have any dependencies:
   ```elixir
   iex> ApplicationX.modules
-  [ApplicationX, CommonX, EnumX, MacroX, MapX]
+  [ApplicationX, CodeX, CommonX, EnumX, MacroX, MapX]
   ```
   """
   @spec modules :: [module]
@@ -205,7 +205,7 @@ defmodule ApplicationX do
   ```elixir
   iex> ApplicationX.modules(:logger)
   [Logger, Logger.App, Logger.BackendSupervisor, Logger.Backends.Console,
-    Logger.Config, Logger.ErlangHandler, Logger.ErrorHandler, Logger.Formatter,
+    Logger.Config, Logger.Counter, Logger.Filter, Logger.Formatter, Logger.Handler,
     Logger.Translator, Logger.Utils, Logger.Watcher]
   ```
 
@@ -213,7 +213,7 @@ defmodule ApplicationX do
   ```elixir
   iex> ApplicationX.modules([:logger, :logger])
   [Logger, Logger.App, Logger.BackendSupervisor, Logger.Backends.Console,
-    Logger.Config, Logger.ErlangHandler, Logger.ErrorHandler, Logger.Formatter,
+    Logger.Config, Logger.Counter, Logger.Filter, Logger.Formatter, Logger.Handler,
     Logger.Translator, Logger.Utils, Logger.Watcher]
   ```
 
