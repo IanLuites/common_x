@@ -14,7 +14,7 @@ The package can be installed by adding `common_x` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:common_x, "~> 0.4"}
+    {:common_x, "~> 0.5"}
   ]
 end
 ```
@@ -26,11 +26,17 @@ The docs can be found at [https://hexdocs.pm/common_x](https://hexdocs.pm/common
 The following modules have extension:
 
  - `ApplicationX` (`Application` extension)
+ - `CodeX` (`Code` extension)
  - `EnumX` (`Enum` extension)
  - `MapX` (`Map` extension)
  - `Macro` (`Macro` extension)
 
 ## Changelog
+
+### 2020-03-15 (v0.5.0)
+
+- Add `CodeX.ensure_compiled?/1`, which returns `true` if the module is already compiled or was successfully compiled.
+- Add `CodeX.ensure_loaded?/1`, which returns `true` if the module is already loaded or was successfully loaded.
 
 ### 2020-03-08 (v0.4.1)
 
