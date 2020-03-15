@@ -140,6 +140,7 @@ defmodule MacroX do
   defp do_camelize(<<>>), do: <<>>
 
   defp to_upper_char(char) when char >= ?a and char <= ?z, do: char - 32
+
   # defp to_upper_char(char), do: char
 
   defp to_lower_char(char) when char >= ?A and char <= ?Z, do: char + 32
