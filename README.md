@@ -33,7 +33,7 @@ The following modules have extension:
 
 ## Changelog
 
-### 2020-04-?? (v0.5.1)
+### 2020-04-05 (v0.5.1)
 
 - Add `ApplicationX.mix_env/0`, which returns the current Mix environment.
 
