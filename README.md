@@ -33,6 +33,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2020-04-?? (v0.5.1)
+
+- Add `ApplicationX.mix_env/0`, which returns the current Mix environment.
+
 ### 2020-03-15 (v0.5.0)
 
 - Add `CodeX.ensure_compiled?/1`, which returns `true` if the module is already compiled or was successfully compiled.
