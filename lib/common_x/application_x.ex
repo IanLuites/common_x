@@ -108,9 +108,6 @@ defmodule ApplicationX do
 
   env =
     cond do
-      Process.whereis(Mix.State) != nil ->
-        Mix.env()
-
       e = System.get_env("MIX_ENV") ->
         String.to_existing_atom(e)
 
