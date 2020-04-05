@@ -106,6 +106,44 @@ defmodule ApplicationX do
   @spec main_project :: Keyword.t()
   def main_project, do: unquote(Macro.escape(main_project || []))
 
+  env =
+    cond do
+      Process.whereis(Mix.State) != nil ->
+        Mix.env()
+
+      e = System.get_env("MIX_ENV") ->
+        String.to_existing_atom(e)
+
+      p = Process.whereis(Mix.TasksServer) ->
+        tasks =
+          p
+          |> Agent.get(&Map.keys(&1))
+          |> Enum.map(&elem(&1, 1))
+          |> Enum.uniq()
+
+        cond do
+          "run" in tasks -> :dev
+          "test" in tasks -> :test
+          :default -> :prod
+        end
+
+      :default ->
+        :prod
+    end
+
+  @doc ~S"""
+  Get the current Mix environment.
+
+  ## Example
+
+  ```elixir
+  iex> ApplicationX.mix_env
+  :test
+  ```
+  """
+  @spec mix_env :: atom
+  def mix_env, do: unquote(env)
+
   @doc ~S"""
   List all available applications excluding system ones.
 
