@@ -106,6 +106,8 @@ defmodule ApplicationX do
   @spec main_project :: Keyword.t()
   def main_project, do: unquote(Macro.escape(main_project || []))
 
+  @test_tasks ~W(test coveralls coveralls.html coveralls.json)
+
   env =
     cond do
       e = System.get_env("MIX_ENV") ->
@@ -120,7 +122,7 @@ defmodule ApplicationX do
 
         cond do
           "run" in tasks -> :dev
-          "test" in tasks -> :test
+          Enum.any?(@test_tasks, &(&1 in tasks)) -> :test
           :default -> :prod
         end
 
