@@ -33,6 +33,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2020-07-02 (v0.5.3)
+
+- Compile warning fix.
+
 ### 2020-05-13 (v0.5.2)
 
 - Improve `ApplicationX.mix_env/0` for newer OTP/Elixir versions.
