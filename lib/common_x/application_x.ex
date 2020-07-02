@@ -107,6 +107,7 @@ defmodule ApplicationX do
   def main_project, do: unquote(Macro.escape(main_project || []))
 
   @test_tasks ~W(test coveralls coveralls.html coveralls.json)
+  _ = @test_tasks
 
   env =
     cond do
