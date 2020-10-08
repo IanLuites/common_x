@@ -106,9 +106,6 @@ defmodule ApplicationX do
   @spec main_project :: Keyword.t()
   def main_project, do: unquote(Macro.escape(main_project || []))
 
-  @test_tasks ~W(test coveralls coveralls.html coveralls.json)
-  _ = @test_tasks
-
   env =
     cond do
       e = System.get_env("MIX_ENV") ->
@@ -121,10 +118,13 @@ defmodule ApplicationX do
           |> Enum.map(&elem(&1, 1))
           |> Enum.uniq()
 
+        preferred =
+          if main_project, do: Keyword.get(main_project, :preferred_cli_env, []), else: []
+
         cond do
-          "run" in tasks -> :dev
-          Enum.any?(@test_tasks, &(&1 in tasks)) -> :test
-          :default -> :prod
+          env = Enum.find_value(tasks, &Mix.Task.preferred_cli_env/1) -> env
+          env = Enum.find_value(tasks, &Keyword.get(preferred, String.to_atom(&1))) -> env
+          :default -> :dev
         end
 
       :default ->

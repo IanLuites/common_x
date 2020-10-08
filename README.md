@@ -33,6 +33,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2020-10-08 (v0.5.4)
+
+- Small fix detecting compile environment.
+
 ### 2020-07-02 (v0.5.3)
 
 - Compile warning fix.
