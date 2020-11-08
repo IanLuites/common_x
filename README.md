@@ -33,6 +33,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2020-11-08 (v0.5.5)
+
+- Small fix detecting compile environment in custom commands and Elixir >= 1.11.
+
 ### 2020-10-08 (v0.5.4)
 
 - Small fix detecting compile environment.

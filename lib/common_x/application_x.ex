@@ -121,7 +121,14 @@ defmodule ApplicationX do
         preferred =
           if main_project, do: Keyword.get(main_project, :preferred_cli_env, []), else: []
 
+        path =
+          case :lists.reverse(String.split(to_string(:code.priv_dir(:common_x)), "/")) do
+            ["priv", "common_x", "lib", env, "_build" | _] -> env
+            _ -> nil
+          end
+
         cond do
+          env = %{"test" => :test, "dev" => :dev, "prod" => :prod}[path] -> env
           env = Enum.find_value(tasks, &Mix.Task.preferred_cli_env/1) -> env
           env = Enum.find_value(tasks, &Keyword.get(preferred, String.to_atom(&1))) -> env
           :default -> :dev
