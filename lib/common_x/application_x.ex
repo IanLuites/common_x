@@ -7,17 +7,21 @@ defmodule ApplicationX do
   @ignore [:kernel, :stdlib, :elixir, :logger]
   @load_error 'no such file or directory'
 
-  main_project =
+  task_module =
     if p = Process.whereis(Mix.TasksServer) do
-      module =
-        p
-        |> Agent.get(&Map.keys/1)
-        |> Enum.find_value(false, fn
-          {:task, task, m} when task in ~W(app.start deps.loadpaths) -> m
-          _ -> false
-        end)
+      p
+      |> Agent.get(&Map.keys/1)
+      |> Enum.find_value(false, fn
+        {:task, task, m} when task in ~W(app.start deps.loadpaths) -> m
+        _ -> false
+      end)
+    end
 
-      if module, do: module.project()
+  main_project =
+    case task_module do
+      falsy when falsy in [nil, false] -> falsy
+      Mix.InstallProject -> []
+      module -> module.project()
     end
 
   main_app =

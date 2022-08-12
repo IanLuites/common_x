@@ -25,13 +25,17 @@ The docs can be found at [https://hexdocs.pm/common_x](https://hexdocs.pm/common
 
 The following modules have extension:
 
- - `ApplicationX` (`Application` extension)
- - `CodeX` (`Code` extension)
- - `EnumX` (`Enum` extension)
- - `MapX` (`Map` extension)
- - `Macro` (`Macro` extension)
+- `ApplicationX` (`Application` extension)
+- `CodeX` (`Code` extension)
+- `EnumX` (`Enum` extension)
+- `MapX` (`Map` extension)
+- `Macro` (`Macro` extension)
 
 ## Changelog
+
+### 2020-08-12 (v0.5.6)
+
+- Fix project detection when installed inside a Elixir script with [`Mix.install/2`](https://hexdocs.pm/mix/Mix.html#install/2).
 
 ### 2020-11-08 (v0.5.5)
 
