@@ -4,7 +4,7 @@ defmodule CommonX.MixProject do
   def project do
     [
       app: :common_x,
-      version: "0.5.6",
+      version: "0.5.8",
       description: "Extension of common Elixir modules.",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,

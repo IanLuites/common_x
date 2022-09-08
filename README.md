@@ -33,6 +33,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2022-09-07 (v0.5.7 / v0.5.8)
+
+- Recompile when mix.exs changes.
+
 ### 2020-08-12 (v0.5.6)
 
 - Fix project detection when installed inside a Elixir script with [`Mix.install/2`](https://hexdocs.pm/mix/Mix.html#install/2).

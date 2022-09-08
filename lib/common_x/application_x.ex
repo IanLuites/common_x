@@ -7,6 +7,11 @@ defmodule ApplicationX do
   @ignore [:kernel, :stdlib, :elixir, :logger]
   @load_error 'no such file or directory'
 
+  @external_resource Path.join(File.cwd!(), "../../mix.exs")
+  @external_resource Path.join(File.cwd!(), "mix.exs")
+  @external_resource Path.join(__DIR__, "../../../../mix.exs")
+  @external_resource Path.join(__DIR__, "../../mix.exs")
+
   task_module =
     if p = Process.whereis(Mix.TasksServer) do
       p
@@ -24,9 +29,9 @@ defmodule ApplicationX do
       module -> module.project()
     end
 
-  main_app =
+  {main_project, main_app} =
     if main_project do
-      main_project[:app]
+      {main_project, main_project[:app]}
     else
       [
         Path.join(File.cwd!(), "../../mix.exs"),
@@ -34,19 +39,21 @@ defmodule ApplicationX do
         Path.join(__DIR__, "../../../../mix.exs"),
         Path.join(__DIR__, "../../mix.exs")
       ]
-      |> Enum.find_value("", fn file ->
-        case File.read(file) do
-          {:ok, d} -> d
-          _ -> false
+      |> Enum.find_value(false, fn file ->
+        if File.exists?(file) do
+          mod =
+            ~r/defmodule\W*(?<module>[a-z\_\.]+)/i
+            |> Regex.named_captures(File.read!(file))
+            |> Kernel.||(%{})
+            |> Map.get("module")
+
+          name = if mod, do: Module.concat(Elixir, mod)
+          name != nil and (Code.ensure_loaded?(name) || Code.compile_file(file))
+
+          project = name.project()
+          {project, project[:app]}
         end
       end)
-      |> (fn v ->
-            ~r/app:\W*:(?<app>[a-z\_]+)/
-            |> Regex.named_captures(v)
-            |> Kernel.||(%{})
-            |> Map.get("app", to_string(Mix.Project.config()[:app]))
-          end).()
-      |> String.to_atom()
     end
 
   @doc ~S"""
