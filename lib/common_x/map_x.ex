@@ -20,7 +20,7 @@ defmodule MapX do
   ...>   {:ok, v1 + v2}
   ...> end)
   {:ok, %{a: 4, b: 2, d: 4}}
-  ````
+  ```
   """
   @spec merge(
           map,

@@ -12,11 +12,20 @@ defmodule ApplicationX do
   @external_resource Path.join(__DIR__, "../../../../mix.exs")
   @external_resource Path.join(__DIR__, "../../mix.exs")
 
-  task_module =
+  mix_tasks =
     if p = Process.whereis(Mix.TasksServer) do
-      p
-      |> Agent.get(&Map.keys/1)
-      |> Enum.find_value(false, fn
+      case Agent.get(p, & &1) do
+        state = %{} -> state
+        ets when is_atom(ets) -> :ets.tab2list(ets)
+      end
+      |> Enum.map(&elem(&1, 0))
+    else
+      false
+    end
+
+  task_module =
+    if mix_tasks do
+      Enum.find_value(mix_tasks, false, fn
         {:task, task, m} when task in ~W(app.start deps.loadpaths) -> m
         _ -> false
       end)
@@ -122,10 +131,9 @@ defmodule ApplicationX do
       e = System.get_env("MIX_ENV") ->
         String.to_existing_atom(e)
 
-      p = Process.whereis(Mix.TasksServer) ->
+      mix_tasks ->
         tasks =
-          p
-          |> Agent.get(&Map.keys(&1))
+          mix_tasks
           |> Enum.map(&elem(&1, 1))
           |> Enum.uniq()
 

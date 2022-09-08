@@ -33,6 +33,10 @@ The following modules have extension:
 
 ## Changelog
 
+### 2022-09-08 (v0.5.9)
+
+- Support Elixir 1.14 changes.
+
 ### 2022-09-07 (v0.5.7 / v0.5.8)
 
 - Recompile when mix.exs changes.

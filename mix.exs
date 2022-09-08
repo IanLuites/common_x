@@ -4,7 +4,7 @@ defmodule CommonX.MixProject do
   def project do
     [
       app: :common_x,
-      version: "0.5.8",
+      version: "0.5.9",
       description: "Extension of common Elixir modules.",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
@@ -60,8 +60,8 @@ defmodule CommonX.MixProject do
 
   defp deps do
     [
-      {:heimdallr, ">= 0.0.2", runtime: false, only: [:dev, :test]},
-      {:meck, "~> 0.8", optional: true, runtime: false, only: [:test]}
+      {:heimdallr, ">= 0.0.0", runtime: false, only: [:dev, :test]},
+      {:meck, "~> 0.9", optional: true, runtime: false, only: [:test]}
     ]
   end
 end
